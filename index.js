@@ -10,7 +10,7 @@ module.exports = {
     var configMessage = [];
     var _this = this;
     var o = target.options['ember-cli-bootstrap-sassy'] || { js: true, glyphicons: true };
-    this.bootstrapPath = target.bowerDirectory + '/bootstrap-sass/assets/';
+    this.bootstrapPath = target.bowerDirectory + '/bootstrap/';
 
     var emberCLIVersion = target.project.emberCLIVersion().split(',').map(function(item) {return Number(item);});
     if (emberCLIVersion[1] === 0  || emberCLIVersion[13] === 13) {
@@ -23,12 +23,13 @@ module.exports = {
     } else {
       if(o.js instanceof Array) {
         o.js.forEach(function(fileName) {
-          target.import(_this.bootstrapPath + 'javascripts/bootstrap/' + fileName + '.js');
+          target.import(_this.bootstrapPath + 'js/dist/' + fileName + '.js');
         });
         configMessage.push('some JS loaded [' + o.js.join(',') + ']');
       } else if (o.js !== false) {
-        target.import(this.bootstrapPath + 'javascripts/bootstrap.js');
-        configMessage.push('all JS enabled');
+        throw new Error('loading all JS is not currently supported');
+        // target.import(this.bootstrapPath + 'javascripts/bootstrap.js');
+        // configMessage.push('all JS enabled');
       } else {
         configMessage.push('no JS enabled');
       }
@@ -36,12 +37,13 @@ module.exports = {
 
     // Import glyphicons from bootstrap
     if(o.glyphicons !== false) {
-      target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.eot', { destDir: '/fonts/bootstrap' });
-      target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.svg', { destDir: '/fonts/bootstrap' });
-      target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.ttf', { destDir: '/fonts/bootstrap' });
-      target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.woff', { destDir: '/fonts/bootstrap' });
-      target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.woff2', { destDir: '/fonts/bootstrap' });
-      configMessage.push('glyphicons enabled');
+      throw new Error('loading glyphicons is not currently supported');
+      // target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.eot', { destDir: '/fonts/bootstrap' });
+      // target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.svg', { destDir: '/fonts/bootstrap' });
+      // target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.ttf', { destDir: '/fonts/bootstrap' });
+      // target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.woff', { destDir: '/fonts/bootstrap' });
+      // target.import(this.bootstrapPath + 'fonts/bootstrap/glyphicons-halflings-regular.woff2', { destDir: '/fonts/bootstrap' });
+      // configMessage.push('glyphicons enabled');
     } else {
       configMessage.push('glyphicons disabled');
     }
@@ -51,7 +53,7 @@ module.exports = {
     }
   },
   treeForStyles: function(){
-    var bootstrapTree = new Funnel(this.treeGenerator(path.join(this.bootstrapPath, 'stylesheets')), {
+    var bootstrapTree = new Funnel(this.treeGenerator(path.join(this.bootstrapPath, 'scss')), {
       srcDir: '/',
       destDir: '/app/styles'
     });
